@@ -17,9 +17,11 @@ void createFood() {
 
 void updateFood() {
 	if (carrot.getGlobalBounds().intersects(pufferfish.getGlobalBounds())) {
-	        int randomX = rand() % 1000 + 1;
-        	int randomY = rand() % 1000 + 1;
+		reroll:
+	        int randomX = rand() % window.getSize().x + 1;
+        	int randomY = rand() % window.getSize().y + 1;
         	Vector2f foodPosition(static_cast<float>(randomX), static_cast<float>(randomY));
         	carrot.setPosition(foodPosition);
+		if (carrot.getGlobalBounds().intersects(pufferfish.getGlobalBounds())) goto reroll; // If the new positoin is inside of the pufferfish, reroll.
 	}
 }
