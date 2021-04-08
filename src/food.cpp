@@ -9,7 +9,6 @@ Texture carrotTexture;
 void createFood() {
 	carrotTexture.loadFromFile("textures/carrot.png");
 	carrotTexture.setSmooth(true);
-	carrotTexture.update(carrotTexture);
 	carrot.setTexture(carrotTexture);
 	carrot.setScale(0.3f, 0.3f);
 	carrot.setRotation(45.f);

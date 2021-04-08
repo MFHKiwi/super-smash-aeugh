@@ -9,7 +9,6 @@ Vector2f fishPosition(30.f, 30.f); // Declare fishPosition variable outside of f
 void createFish() {
 	pufferfishTexture.loadFromFile("textures/pufferfish.png"); // Set pufferfish properties.
 	pufferfishTexture.setSmooth(true);
-	pufferfishTexture.update(pufferfishTexture);
 	pufferfish.setTexture(pufferfishTexture);
 	pufferfish.setScale(0.5f, 0.5f);
 }

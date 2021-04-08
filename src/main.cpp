@@ -1,6 +1,6 @@
 #include "pufferfish.hpp"
 #include "food.hpp"
-#include <iostream>
+#include "enemy.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
@@ -13,6 +13,7 @@ int main() {
 	window.setFramerateLimit(30);
 	createFish(); // Create pufferfish.
 	createFood();
+	createEnemy();
 	while (window.isOpen()) { // Run until window closed.
 		Event event; // Detect window closing event.
 		while (window.pollEvent(event)) {
@@ -23,6 +24,7 @@ int main() {
 		window.clear(BG_COLOUR); // Redraw window.
 		window.draw(pufferfish);
 		window.draw(carrot);
+		window.draw(enemy);
 		window.display();
 	}
 	return 0;
