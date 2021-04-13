@@ -4,3 +4,4 @@ using namespace sf;
 extern Sprite enemy;
 extern Texture enemyTexture;
 void createEnemy();
+void updateEnemy();

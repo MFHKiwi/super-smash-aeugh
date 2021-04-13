@@ -12,3 +12,7 @@ void createEnemy() {
 	enemy.setScale(0.9f, 0.9f);
 	enemy.setPosition(30.f, 150.f);
 }
+
+void updateEnemy() {
+	
+}
