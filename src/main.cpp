@@ -6,12 +6,12 @@
 
 using namespace sf;
 #define BG_COLOUR Color::White // Colour for window to use.
-RenderWindow window(VideoMode(800, 600), "Super Smash ÆÜGH"); // Create window and set its properties.
+RenderWindow window(VideoMode(1024, 768), "Super Smash ÆÜGH"); // Create window and set its properties.
 
 int main() {
 	window.setVerticalSyncEnabled(true);
 	window.setFramerateLimit(30);
-	createFish(); // Create pufferfish.
+	createFish(); // Create sprites.
 	createFood();
 	createEnemy();
 	while (window.isOpen()) { // Run until window closed.
@@ -19,9 +19,11 @@ int main() {
 		while (window.pollEvent(event)) {
 			if (event.type == Event::Closed) window.close();
         	}
-		updateFish(); // Call pufferfish update function.
-		updateFood();
+		updateFood(); // Call sprite update function.
 		updateEnemy();
+		if (updateFish() == 1) { // Check if fish contacts enemy.
+			return 0;
+		} else;
 		window.clear(BG_COLOUR); // Redraw window.
 		window.draw(pufferfish);
 		window.draw(carrot);
