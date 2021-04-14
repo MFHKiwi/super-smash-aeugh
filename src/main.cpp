@@ -22,7 +22,7 @@ int main() {
 		updateFood(); // Call sprite update function.
 		updateEnemy();
 		if (updateFish() == 1) { // Check if fish contacts enemy.
-			return 0;
+			window.close();
 		} else;
 		window.clear(BG_COLOUR); // Redraw window.
 		window.draw(pufferfish);
