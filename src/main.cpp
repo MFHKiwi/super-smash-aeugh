@@ -21,6 +21,7 @@ int main() {
         	}
 		updateFish(); // Call pufferfish update function.
 		updateFood();
+		updateEnemy();
 		window.clear(BG_COLOUR); // Redraw window.
 		window.draw(pufferfish);
 		window.draw(carrot);
