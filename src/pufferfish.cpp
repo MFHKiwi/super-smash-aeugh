@@ -22,7 +22,7 @@ int updateFish() {
 	if (pufferfish.getPosition().x <= 0) fishPosition.x = fishPosition.x + 7.f; // Detect collision with window borders.
 	if (pufferfish.getPosition().y <= 0) fishPosition.y = fishPosition.y + 7.f;
 	if (pufferfish.getPosition().x + pufferfish.getGlobalBounds().width >= window.getSize().x) fishPosition.x = fishPosition.x - 7.f;
-	if (pufferfish.getPosition().y + pufferfish.getGlobalBounds().width >= window.getSize().y) fishPosition.y = fishPosition.y - 7.f;
+	if (pufferfish.getPosition().y + pufferfish.getGlobalBounds().height >= window.getSize().y) fishPosition.y = fishPosition.y - 7.f;
 	pufferfish.setPosition(fishPosition);
 	if (pufferfish.getGlobalBounds().intersects(enemy.getGlobalBounds())) return 1;
 	else return 0;
