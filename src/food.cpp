@@ -9,8 +9,8 @@ Texture carrotTexture;
 
 Vector2f randomV2f() {
 	srand(time(NULL));
-	int randomX = rand() % window.getSize().x + 1;
-        int randomY = rand() % window.getSize().y + 1;
+	int randomX = rand() % window.getSize().x + carrot.getGlobalBounds().width;
+        int randomY = rand() % window.getSize().y + carrot.getGlobalBounds().height;
 	Vector2f output(static_cast<float>(randomX), static_cast<float>(randomY));
 	return output;
 }
