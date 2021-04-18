@@ -6,6 +6,7 @@ using namespace sf;
 Sprite pufferfish; // Declare pufferfish and texture globally to allow external access.
 Texture pufferfishTexture;
 Vector2f fishPosition(30.f, 30.f); // Declare fishPosition variable outside of function to avoid resetting when called again.
+int delay = 0;
 
 void createFish() {
 	pufferfishTexture.loadFromFile("textures/pufferfish.png"); // Set pufferfish properties.
@@ -24,6 +25,10 @@ int updateFish() {
 	if (pufferfish.getPosition().x + pufferfish.getGlobalBounds().width >= window.getSize().x) fishPosition.x = fishPosition.x - 7.f;
 	if (pufferfish.getPosition().y + pufferfish.getGlobalBounds().height >= window.getSize().y) fishPosition.y = fishPosition.y - 7.f;
 	pufferfish.setPosition(fishPosition);
-	if (pufferfish.getGlobalBounds().intersects(enemy.getGlobalBounds())) return 1;
-	else return 0;
+	if (pufferfish.getGlobalBounds().intersects(enemy.getGlobalBounds())) { // Detect collision with enemy.
+		delay++;
+		if (delay == 10) return 1; // Give 333ms buffer zone (30 fps / 3).
+	}
+	else delay = 0;
+	return 0;
 }
