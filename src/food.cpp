@@ -11,8 +11,8 @@ Vector2f randomV2f() {
 	srand(time(NULL));
 	int randomX = rand() % window.getSize().x; // Generate random numbers + logic to prevent carrot from spawning off-screen.
 	randomX = (randomX > window.getSize().x / 2)? randomX : randomX + carrot.getGlobalBounds().width;
-        int randomY = rand() % window.getSize().y + carrot.getGlobalBounds().height;
-	randomY = (randomY > window.getSize().y / 2)? randomY - carrot.getGlobalBounds().height : randomY + carrot.getGlobalBounds().height;
+        int randomY = rand() % window.getSize().y;
+	randomY = (randomY > window.getSize().y / 2)? randomY - carrot.getGlobalBounds().height : randomY;
 	Vector2f output(static_cast<float>(randomX), static_cast<float>(randomY));
 	return output;
 }

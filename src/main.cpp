@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <string>
+#include <unistd.h>
 
 using namespace sf;
 using namespace std;
@@ -11,10 +12,21 @@ using namespace std;
 #define FG_COLOUR Color::Black // Colour for text.
 RenderWindow window(VideoMode(1024, 768), "Super Smash ÆÜGH"); // Create window and set its properties.
 Font silkscreen;
+Event event;
 Text scoreText("", silkscreen);
 int score = 0;
 
+void redrawWindow() {
+        window.clear(BG_COLOUR); 
+        window.draw(pufferfish);
+        window.draw(carrot);
+        window.draw(enemy);
+        window.draw(scoreText);
+        window.display();
+}
+
 int main() {
+	bool paused = false;
 	window.setVerticalSyncEnabled(true);
 	window.setFramerateLimit(30);
 	silkscreen.loadFromFile("textures/silkscreen.ttf");
@@ -25,8 +37,7 @@ int main() {
 	createFood();
 	createEnemy();
 	while (window.isOpen()) { // Run until window closed.
-		Event event; // Detect window closing event.
-		while (window.pollEvent(event)) {
+		while (window.pollEvent(event)) { // Detect window close.
 			if (event.type == Event::Closed) window.close();
         	}
 		updateEnemy(); // Call sprite update function.
@@ -35,12 +46,18 @@ int main() {
 		if (updateFish() == 1) { // Check if fish contacts enemy.
 			window.close();
 		} else;
-		window.clear(BG_COLOUR); // Redraw window.
-		window.draw(pufferfish);
-		window.draw(carrot);
-		window.draw(enemy);
-		window.draw(scoreText);
-		window.display();
+		redrawWindow();
+		if (Keyboard::isKeyPressed(Keyboard::Escape)) paused = true; // Detect press of ESC.
+		while (Keyboard::isKeyPressed(Keyboard::Escape)); // Ignore subsequent press events until released.
+		while (paused == true && window.isOpen()) {
+			scoreText.setString("Paused");
+			redrawWindow();
+			while (window.pollEvent(event)) { // Detect window close.
+                        	if (event.type == Event::Closed) window.close();
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Escape)) paused = false;
+			while (Keyboard::isKeyPressed(Keyboard::Escape));
+		}
 	}
 	return 0;
 }
