@@ -1,4 +1,5 @@
 #include "pufferfish.hpp"
+#include "pufferfish_data.hpp"
 #include "enemy.hpp"
 #include <SFML/Graphics.hpp>
 
@@ -9,7 +10,7 @@ Vector2f fishPosition(30.f, 30.f); // Declare fishPosition variable outside of f
 int delay = 0;
 
 void createFish() {
-	pufferfishTexture.loadFromFile("textures/pufferfish.png"); // Set pufferfish properties.
+	pufferfishTexture.loadFromMemory(pufferfish_png, pufferfish_png_len); // Set pufferfish properties.
 	pufferfishTexture.setSmooth(true);
 	pufferfish.setTexture(pufferfishTexture);
 	pufferfish.setScale(0.4f, 0.4f);

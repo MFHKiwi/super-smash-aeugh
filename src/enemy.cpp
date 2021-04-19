@@ -1,4 +1,5 @@
 #include "enemy.hpp"
+#include "enemy_data.hpp"
 #include "pufferfish.hpp"
 #include <SFML/Graphics.hpp>
 
@@ -8,7 +9,7 @@ Texture enemyTexture;
 Vector2f enemyPosition(static_cast<Vector2f>(window.getSize()));
 
 void createEnemy() {
-	enemyTexture.loadFromFile("textures/gordon-ramsay.png");
+	enemyTexture.loadFromMemory(enemy_png, enemy_png_len);
 	enemyTexture.setSmooth(true);
 	enemy.setTexture(enemyTexture);
 	enemy.setScale(0.7f, 0.7f);

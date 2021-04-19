@@ -1,10 +1,10 @@
 #include "pufferfish.hpp"
 #include "food.hpp"
 #include "enemy.hpp"
+#include "font_data.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <string>
-#include <unistd.h>
 
 using namespace sf;
 using namespace std;
@@ -29,7 +29,7 @@ int main() {
 	bool paused = false;
 	window.setVerticalSyncEnabled(true);
 	window.setFramerateLimit(30);
-	silkscreen.loadFromFile("textures/silkscreen.ttf");
+	silkscreen.loadFromMemory(silkscreen_ttf, silkscreen_ttf_len);
 	scoreText.setCharacterSize(35);
 	scoreText.setStyle(Text::Regular);
 	scoreText.setFillColor(FG_COLOUR);

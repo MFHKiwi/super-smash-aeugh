@@ -1,4 +1,5 @@
 #include "food.hpp"
+#include "food_data.hpp"
 #include "pufferfish.hpp"
 #include <SFML/Graphics.hpp>
 #include <ctime>
@@ -18,7 +19,7 @@ Vector2f randomV2f() {
 }
 
 void createFood() {
-	carrotTexture.loadFromFile("textures/carrot.png");
+	carrotTexture.loadFromMemory(carrot_png, carrot_png_len);
 	carrotTexture.setSmooth(true);
 	carrot.setTexture(carrotTexture);
 	carrot.setScale(0.3f, 0.3f);
