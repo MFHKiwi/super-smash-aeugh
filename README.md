@@ -11,5 +11,5 @@ A simple game made in SFML and C++ that features an arrow key-controlled pufferf
 
 ### To build:
 1. Ensure that the above dependencies are on your system.
-2. Type `make` to build the program.
-3. Run the executable with `~./super-smash-aeugh`.
+2. Run `make` to build the program.
+3. Run the executable with `./super-smash-aeugh`.
