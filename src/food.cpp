@@ -1,12 +1,16 @@
 #include "food.hpp"
 #include "food_data.hpp"
+#include "eat_sound.hpp"
 #include "pufferfish.hpp"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <ctime>
 
 using namespace sf;
 Sprite carrot;
 Texture carrotTexture;
+SoundBuffer eatBuffer;
+Sound eat;
 
 Vector2f randomV2f() {
 	srand(time(NULL));
@@ -19,12 +23,14 @@ Vector2f randomV2f() {
 }
 
 void createFood() {
-	carrotTexture.loadFromMemory(carrot_png, carrot_png_len);
-	carrotTexture.setSmooth(true);
+	carrotTexture.loadFromMemory(carrot_png, carrot_png_len); // Set texture.
+	carrotTexture.setSmooth(true); // Set properties.
 	carrot.setTexture(carrotTexture);
 	carrot.setScale(0.3f, 0.3f);
 	carrot.setRotation(45.f);
 	carrot.setPosition(randomV2f());
+	eatBuffer.loadFromMemory(eat_wav, eat_wav_len); // Load sound effect.
+        eat.setBuffer(eatBuffer);
 }
 
 int updateFood() {
@@ -32,6 +38,7 @@ int updateFood() {
 		reroll:
         	carrot.setPosition(randomV2f());
 		if (carrot.getGlobalBounds().intersects(pufferfish.getGlobalBounds())) goto reroll; // If the new positoin is inside of the pufferfish, reroll.
+		eat.play(); // Play sound effect. Do not wait for it to finish, as the game loop needs to continue immediately.
 		return 1;
 	} else return 0;
 }

@@ -1,19 +1,25 @@
 #include "pufferfish.hpp"
 #include "pufferfish_data.hpp"
+#include "death_sound.hpp"
 #include "enemy.hpp"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 using namespace sf;
-Sprite pufferfish; // Declare pufferfish and texture globally to allow external access.
+Sprite pufferfish;
 Texture pufferfishTexture;
+SoundBuffer deathBuffer;
+Sound death;
 Vector2f fishPosition(30.f, 30.f); // Declare fishPosition variable outside of function to avoid resetting when called again.
 int delay = 0;
 
 void createFish() {
-	pufferfishTexture.loadFromMemory(pufferfish_png, pufferfish_png_len); // Set pufferfish properties.
-	pufferfishTexture.setSmooth(true);
+	pufferfishTexture.loadFromMemory(pufferfish_png, pufferfish_png_len); // Set texture.
+	pufferfishTexture.setSmooth(true); // Set properties
 	pufferfish.setTexture(pufferfishTexture);
 	pufferfish.setScale(0.4f, 0.4f);
+	deathBuffer.loadFromMemory(death_wav, death_wav_len); // Load sound effect.
+	death.setBuffer(deathBuffer);
 }
 
 int updateFish() {
@@ -28,7 +34,11 @@ int updateFish() {
 	pufferfish.setPosition(fishPosition);
 	if (pufferfish.getGlobalBounds().intersects(enemy.getGlobalBounds())) { // Detect collision with enemy.
 		delay++;
-		if (delay == 10) return 1; // Give 333ms buffer zone (30 fps / 3).
+		if (delay == 10) { // Give 333ms buffer zone (30 fps / 3).
+			death.play(); // Play death sound effect.
+			while (death.getStatus() != Sound::Status::Stopped); // Wait for sound effect to stop.
+			return 1;
+		}
 	}
 	else delay = 0;
 	return 0;
