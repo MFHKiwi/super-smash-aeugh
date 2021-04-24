@@ -7,6 +7,7 @@ using namespace sf;
 Sprite enemy;
 Texture enemyTexture;
 Vector2f enemyPosition(static_cast<Vector2f>(window.getSize()));
+float speed;
 
 void createEnemy() {
 	enemyTexture.loadFromMemory(enemy_png, enemy_png_len); // Load texture.
@@ -14,12 +15,14 @@ void createEnemy() {
 	enemy.setTexture(enemyTexture);
 	enemy.setScale(0.7f, 0.7f);
 	enemy.setPosition(enemyPosition);
+	if (easy == true) speed = 2.2f;
+	else speed = 3.5f;
 }
 
 void updateEnemy() {
-	if (pufferfish.getPosition().x > enemy.getPosition().x) enemyPosition.x = enemyPosition.x + 3.5f; // Go towards location of pufferfish at half its speed.
-	if (pufferfish.getPosition().x < enemy.getPosition().x) enemyPosition.x = enemyPosition.x - 3.5f;
-	if (pufferfish.getPosition().y > enemy.getPosition().y) enemyPosition.y = enemyPosition.y + 3.5f;
-	if (pufferfish.getPosition().y < enemy.getPosition().y) enemyPosition.y = enemyPosition.y - 3.5f;
+	if (pufferfish.getPosition().x > enemy.getPosition().x + 3.5f) enemyPosition.x = enemyPosition.x + speed; // Go towards location of pufferfish at the selected speed. Allow up to an offset of 3.5 to avoid jittering from side to side.
+	if (pufferfish.getPosition().x < enemy.getPosition().x) enemyPosition.x = enemyPosition.x - speed;
+	if (pufferfish.getPosition().y > enemy.getPosition().y + 3.5f) enemyPosition.y = enemyPosition.y + speed;
+	if (pufferfish.getPosition().y < enemy.getPosition().y) enemyPosition.y = enemyPosition.y - speed;
 	enemy.setPosition(enemyPosition);
 }

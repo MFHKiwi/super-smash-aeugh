@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <string>
+#include <iostream>
 
 using namespace sf;
 using namespace std;
@@ -17,6 +18,7 @@ Event event;
 Image icon;
 Text scoreText("", silkscreen);
 int score = 0;
+bool easy = false;
 
 void redrawWindow() {
         window.clear(BG_COLOUR); 
@@ -27,7 +29,16 @@ void redrawWindow() {
         window.display();
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+	if (argc > 1) {
+		string arg = argv[1];
+		if ((arg == "-e") || (arg == "--easy")) easy = true;
+		else easy = false;
+		if ((arg == "-h") || (arg == "--help")) {
+			cout << "-h, --help: print this help message\n-e, --easy: make enemy move slower\n";
+			return 0;
+		}
+	}
 	bool paused = false;
 	icon.loadFromMemory(icon_png, icon_png_len);
 	window.setVerticalSyncEnabled(true);
