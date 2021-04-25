@@ -19,6 +19,8 @@ Image icon;
 Text scoreText("", silkscreen);
 int score = 0;
 bool easy = false;
+Clock clocktime;
+Time elapsed;
 
 void redrawWindow() {
         window.clear(BG_COLOUR); 
@@ -42,7 +44,7 @@ int main(int argc, char* argv[]) {
 	bool paused = false;
 	icon.loadFromMemory(icon_png, icon_png_len);
 	window.setVerticalSyncEnabled(true);
-	window.setFramerateLimit(30);
+	window.setFramerateLimit(60);
 	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 	silkscreen.loadFromMemory(silkscreen_ttf, silkscreen_ttf_len);
 	scoreText.setCharacterSize(35);
@@ -52,6 +54,7 @@ int main(int argc, char* argv[]) {
 	createFood();
 	createEnemy();
 	while (window.isOpen()) { // Run until window closed.
+		elapsed = clocktime.restart();
 		while (window.pollEvent(event)) { // Detect window close.
 			if (event.type == Event::Closed) window.close();
         	}

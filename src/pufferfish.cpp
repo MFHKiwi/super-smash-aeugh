@@ -12,6 +12,7 @@ SoundBuffer deathBuffer;
 Sound death;
 Vector2f fishPosition(30.f, 30.f); // Declare fishPosition variable outside of function to avoid resetting when called again.
 int delay = 0;
+const float movePerMillisecond = 0.21f;
 
 void createFish() {
 	pufferfishTexture.loadFromMemory(pufferfish_png, pufferfish_png_len); // Set texture.
@@ -23,14 +24,14 @@ void createFish() {
 }
 
 int updateFish() {
-        if (Keyboard::isKeyPressed(Keyboard::Left)) fishPosition.x  = fishPosition.x - 7.f; // Detect key presses and change fishPosition variables accordingly. Else ifs avoided intentionally to prevent ignoring keystrokes.
-        if (Keyboard::isKeyPressed(Keyboard::Right)) fishPosition.x = fishPosition.x + 7.f;
-        if (Keyboard::isKeyPressed(Keyboard::Up)) fishPosition.y = fishPosition.y - 7.f;
-        if (Keyboard::isKeyPressed(Keyboard::Down)) fishPosition.y = fishPosition.y + 7.f;
-	if (pufferfish.getPosition().x <= 0) fishPosition.x = fishPosition.x + 7.f; // Detect collision with window borders.
-	if (pufferfish.getPosition().y <= 0) fishPosition.y = fishPosition.y + 7.f;
-	if (pufferfish.getPosition().x + pufferfish.getGlobalBounds().width >= window.getSize().x) fishPosition.x = fishPosition.x - 7.f;
-	if (pufferfish.getPosition().y + pufferfish.getGlobalBounds().height >= window.getSize().y) fishPosition.y = fishPosition.y - 7.f;
+        if (Keyboard::isKeyPressed(Keyboard::Left)) fishPosition.x  = fishPosition.x - movePerMillisecond * elapsed.asMilliseconds(); // Detect key presses and change fishPosition variables accordingly. Else ifs avoided intentionally to prevent ignoring keystrokes.
+        if (Keyboard::isKeyPressed(Keyboard::Right)) fishPosition.x = fishPosition.x + movePerMillisecond * elapsed.asMilliseconds();
+        if (Keyboard::isKeyPressed(Keyboard::Up)) fishPosition.y = fishPosition.y - movePerMillisecond * elapsed.asMilliseconds();
+        if (Keyboard::isKeyPressed(Keyboard::Down)) fishPosition.y = fishPosition.y + movePerMillisecond * elapsed.asMilliseconds();
+	if (pufferfish.getPosition().x <= 0) fishPosition.x = fishPosition.x + movePerMillisecond * elapsed.asMilliseconds(); // Detect collision with window borders.
+	if (pufferfish.getPosition().y <= 0) fishPosition.y = fishPosition.y + movePerMillisecond * elapsed.asMilliseconds();
+	if (pufferfish.getPosition().x + pufferfish.getGlobalBounds().width >= window.getSize().x) fishPosition.x = fishPosition.x - movePerMillisecond * elapsed.asMilliseconds();
+	if (pufferfish.getPosition().y + pufferfish.getGlobalBounds().height >= window.getSize().y) fishPosition.y = fishPosition.y - movePerMillisecond * elapsed.asMilliseconds();
 	pufferfish.setPosition(fishPosition);
 	if (pufferfish.getGlobalBounds().intersects(enemy.getGlobalBounds())) { // Detect collision with enemy.
 		delay++;
