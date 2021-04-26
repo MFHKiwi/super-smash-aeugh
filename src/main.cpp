@@ -73,7 +73,10 @@ int main(int argc, char* argv[]) {
 			while (window.pollEvent(event)) { // Detect window close.
                         	if (event.type == Event::Closed) window.close();
 			}
-			if (Keyboard::isKeyPressed(Keyboard::Escape)) paused = false;
+			if (Keyboard::isKeyPressed(Keyboard::Escape)) {
+				paused = false;
+				clocktime.restart();
+			}
 			while (Keyboard::isKeyPressed(Keyboard::Escape));
 		}
 	}
