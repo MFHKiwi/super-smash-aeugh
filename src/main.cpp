@@ -43,8 +43,6 @@ int main(int argc, char* argv[]) {
 	}
 	bool paused = false;
 	icon.loadFromMemory(icon_png, icon_png_len);
-	window.setVerticalSyncEnabled(true);
-	window.setFramerateLimit(60);
 	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 	silkscreen.loadFromMemory(silkscreen_ttf, silkscreen_ttf_len);
 	scoreText.setCharacterSize(35);
@@ -65,19 +63,17 @@ int main(int argc, char* argv[]) {
 			window.close();
 		} else;
 		redrawWindow();
-		if (Keyboard::isKeyPressed(Keyboard::Escape)) paused = true; // Detect press of ESC.
-		while (Keyboard::isKeyPressed(Keyboard::Escape)); // Ignore subsequent press events until released.
+		while (Keyboard::isKeyPressed(Keyboard::Escape)) paused = true; // Ignore subsequent press events until released.
 		while (paused == true && window.isOpen()) {
 			scoreText.setString("Paused");
 			redrawWindow();
 			while (window.pollEvent(event)) { // Detect window close.
                         	if (event.type == Event::Closed) window.close();
 			}
-			if (Keyboard::isKeyPressed(Keyboard::Escape)) {
+			while (Keyboard::isKeyPressed(Keyboard::Escape)) {
 				paused = false;
 				clocktime.restart();
 			}
-			while (Keyboard::isKeyPressed(Keyboard::Escape));
 		}
 	}
 	return 0;

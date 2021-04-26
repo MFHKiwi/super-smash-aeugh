@@ -20,10 +20,10 @@ void createEnemy() {
 }
 
 void updateEnemy() {
-	float movePerMillisecond = speed / 33.3333333333f;
-	if (pufferfish.getPosition().x > enemy.getPosition().x + 3.5f) enemyPosition.x = enemyPosition.x + movePerMillisecond * elapsed.asMilliseconds(); // Go towards location of pufferfish at the selected movePerMillisecond * elapsed.asMilliseconds(). Allow up to an offset of 3.5 to avoid jittering from side to side.
-	if (pufferfish.getPosition().x < enemy.getPosition().x) enemyPosition.x = enemyPosition.x - movePerMillisecond * elapsed.asMilliseconds();
-	if (pufferfish.getPosition().y > enemy.getPosition().y + 3.5f) enemyPosition.y = enemyPosition.y + movePerMillisecond * elapsed.asMilliseconds();
-	if (pufferfish.getPosition().y < enemy.getPosition().y) enemyPosition.y = enemyPosition.y - movePerMillisecond * elapsed.asMilliseconds();
+	float movePerMicrosecond = speed / 33333.3333333f;
+	if (pufferfish.getPosition().x > enemy.getPosition().x + 3.5f) enemyPosition.x = enemyPosition.x + movePerMicrosecond * elapsed.asMicroseconds(); // Go towards location of pufferfish at the selected movePerMicrosecond * elapsed.asMicroseconds(). Allow up to an offset of 3.5 to avoid jittering from side to side.
+	if (pufferfish.getPosition().x < enemy.getPosition().x) enemyPosition.x = enemyPosition.x - movePerMicrosecond * elapsed.asMicroseconds();
+	if (pufferfish.getPosition().y > enemy.getPosition().y + 3.5f) enemyPosition.y = enemyPosition.y + movePerMicrosecond * elapsed.asMicroseconds();
+	if (pufferfish.getPosition().y < enemy.getPosition().y) enemyPosition.y = enemyPosition.y - movePerMicrosecond * elapsed.asMicroseconds();
 	enemy.setPosition(enemyPosition);
 }
