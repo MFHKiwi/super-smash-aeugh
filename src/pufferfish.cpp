@@ -11,8 +11,10 @@ Texture pufferfishTexture;
 SoundBuffer deathBuffer;
 Sound death;
 Vector2f fishPosition(30.f, 30.f); // Declare fishPosition variable outside of function to avoid resetting when called again.
-int delay = 0;
 const float movePerMicrosecond = 0.00021f;
+bool touched = false;
+Clock sinceTouch;
+Time elapsedSinceTouch;
 
 void createFish() {
 	pufferfishTexture.loadFromMemory(pufferfish_png, pufferfish_png_len); // Set texture.
@@ -34,13 +36,18 @@ int updateFish() {
 	if (pufferfish.getPosition().y + pufferfish.getGlobalBounds().height >= window.getSize().y) fishPosition.y = fishPosition.y - movePerMicrosecond * elapsed.asMicroseconds();
 	pufferfish.setPosition(fishPosition);
 	if (pufferfish.getGlobalBounds().intersects(enemy.getGlobalBounds())) { // Detect collision with enemy.
-		delay++;
-		if (delay == 10) { // Give 333ms buffer zone (30 fps / 3).
-			death.play(); // Play death sound effect.
-			while (death.getStatus() != Sound::Status::Stopped); // Wait for sound effect to stop.
-			return 1;
+		if (touched == true) {
+			elapsedSinceTouch = sinceTouch.getElapsedTime();
+			if (elapsedSinceTouch.asMilliseconds() > 300) {
+				death.play(); // Play death sound effect.
+				while (death.getStatus() != Sound::Status::Stopped); // Wait for sound effect to stop.
+				return 1;
+			}
 		}
-	}
-	else delay = 0;
+		else {
+			touched = true;
+			sinceTouch.restart();
+		}
+	} else touched = false;
 	return 0;
 }
