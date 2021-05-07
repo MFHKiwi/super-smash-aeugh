@@ -1,6 +1,6 @@
 CXX_COMPILER=clang++
 
-build: src/main.cpp src/pufferfish.cpp src/food.cpp src/enemy.cpp
+build: src/main.cpp
 	 xxd -i assets/pufferfish.png | sed 's/assets_//g' > src/pufferfish_data.hpp
 	 xxd -i assets/carrot.png | sed 's/assets_//g' > src/food_data.hpp
 	 xxd -i assets/enemy.png | sed 's/assets_//g' > src/enemy_data.hpp
