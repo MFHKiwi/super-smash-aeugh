@@ -37,6 +37,7 @@ int main(int argc, char* argv[]) {
 	scoreText.setStyle(Text::Regular);
 	scoreText.setFillColor(Color::Black);
 	CustomWindow window(1024, 768, "Super Smash AEUGH", icon_png, icon_png_len);
+	window.window.setVerticalSyncEnabled(true);
 	CustomSprite pufferfish(pufferfish_png, pufferfish_png_len, 0.4f, 0.4f, 0.f, 30.f, 30.f);
 	CustomSprite carrot(carrot_png, carrot_png_len, 0.3f, 0.3f, 45.f, randomV2f(window));
 	CustomSound death(death_wav, death_wav_len);
