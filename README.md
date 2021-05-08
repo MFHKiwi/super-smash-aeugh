@@ -5,6 +5,10 @@ A simple game made in SFML and C++ that features an arrow key-controlled pufferf
 * Arrow keys to control pufferfish
 * ESC to pause.
 
+### Command line arguments:
+* `-h` or `--help` to display help screen
+* `-e` or `--easy` to activate easy mode
+
 ### Build dependencies:
 * SFML 2.5.1 (this is the one on my system; you can probably get away with an older one)
 * xxd
