@@ -11,3 +11,6 @@ build: src/main.cpp
 	 $(CXX_COMPILER) -c src/main.cpp
 	 $(CXX_COMPILER) main.o -o super-smash-aeugh -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system -I src/
 	 rm *.o
+
+install: ./super-smash-aeugh
+	cp ./super-smash-aeugh /usr/bin/ 
