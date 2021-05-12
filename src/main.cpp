@@ -9,6 +9,7 @@
 #include "sound.hpp"
 #include "window.hpp"
 #include "randomV2f.hpp"
+#include "text.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
@@ -17,26 +18,26 @@
 
 using namespace sf;
 using namespace std;
+const string version = "Beta v1.0.2";
 
 int main(int argc, char* argv[]) {
-	float speed = 3.5f / 33333.3333333f;
+	float speed = 3.7f / 33333.3333333f;
 	if (argc > 1) { // Run if command line argument given.
 		string arg = argv[1];
 		if ((arg == "-e") || (arg == "--easy")) speed = 2.2f / 33333.3333333f; // Activate easy mode if easy flag is given.
 		else;
 		if ((arg == "-h") || (arg == "--help")) {
-			cout << "\nSuper Smash ÆÜGH Help\n\n-h, --help: print this help message\n-e, --easy: make enemy move slower\n";
+			cout << "\nSuper Smash ÆÜGH Help\n" << version << "\n\n-h, --help: print this help message\n-e, --easy: make enemy move slower\n";
 			return 0;
 		}
 	}
 	Clock gameClock;
 	Font silkscreen;
 	silkscreen.loadFromMemory(silkscreen_ttf, silkscreen_ttf_len);
-	Text scoreText("", silkscreen);
-	scoreText.setCharacterSize(35);
-	scoreText.setStyle(Text::Regular);
-	scoreText.setFillColor(Color::Black);
+	CustomText scoreText(silkscreen_ttf, silkscreen_ttf_len, 35, Text::Regular, Color::Black, "");
+	CustomText versionText(silkscreen_ttf, silkscreen_ttf_len, 35, Text::Regular, Color::Black, version);
 	CustomWindow window(1024, 768, "Super Smash AEUGH", icon_png, icon_png_len);
+	versionText.text.setPosition(window.window.getSize().x - versionText.text.getGlobalBounds().width - 10.f, 0.f);
 	window.window.setVerticalSyncEnabled(true);
 	CustomSprite pufferfish(pufferfish_png, pufferfish_png_len, 0.4f, 0.4f, 0.f, 30.f, 30.f);
 	CustomSprite carrot(carrot_png, carrot_png_len, 0.3f, 0.3f, 45.f, randomV2f(window));
@@ -56,6 +57,7 @@ int main(int argc, char* argv[]) {
 			if (event.type == Event::Resized) {
 				sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
 				window.window.setView(sf::View(visibleArea));
+				versionText.text.setPosition(window.window.getSize().x - versionText.text.getGlobalBounds().width - 10.f, 0.f);
 			}
                 }
 		// Detect keystrokes and move fish within window bounds.
@@ -92,12 +94,13 @@ int main(int argc, char* argv[]) {
 		window.window.draw(pufferfish.sprite);
 		window.window.draw(carrot.sprite);
 		window.window.draw(enemy.sprite);
-		scoreText.setString("Score: " + to_string(score));
+		scoreText.text.setString("Score: " + to_string(score));
 		while (Keyboard::isKeyPressed(Keyboard::Escape)) {
                         paused = true;
-                        scoreText.setString("Paused");
+                        scoreText.text.setString("Paused");
                 }
-		window.window.draw(scoreText);
+		window.window.draw(scoreText.text);
+		window.window.draw(versionText.text);
 		window.window.display();
                 while (paused == true && window.window.isOpen()) {
                         while (window.window.pollEvent(event)) { // Detect window close.
@@ -105,6 +108,7 @@ int main(int argc, char* argv[]) {
 				if (event.type == Event::Resized) {
                           		sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
                                 	window.window.setView(sf::View(visibleArea));
+					versionText.text.setPosition(window.window.getSize().x - versionText.text.getGlobalBounds().width - 10.f, 0.f);
                         	}
                         }
                         while (Keyboard::isKeyPressed(Keyboard::Escape)) {
