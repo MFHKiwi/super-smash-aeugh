@@ -21,7 +21,7 @@ using namespace std;
 const string version = "Beta v1.0.2";
 
 int main(int argc, char* argv[]) {
-	float speed = 3.7f / 33333.3333333f;
+	float speed = 3.8f / 33333.3333333f;
 	if (argc > 1) { // Run if command line argument given.
 		string arg = argv[1];
 		if ((arg == "-e") || (arg == "--easy")) speed = 2.2f / 33333.3333333f; // Activate easy mode if easy flag is given.
@@ -48,7 +48,7 @@ int main(int argc, char* argv[]) {
 	do {
 		carrot.teleport(randomV2f(window, carrot));
 	} while (carrot.touches(pufferfish));
-	CustomSprite enemy(enemy_png, enemy_png_len, 0.6f, 0.6f, 0.f, window.window.getSize().x, window.window.getSize().y);
+	CustomSprite enemy(enemy_png, enemy_png_len, 0.7f, 0.7f, 0.f, window.window.getSize().x, window.window.getSize().y);
 	while (window.window.isOpen()) {
 		Time elapsedSinceLastTick = gameClock.restart(); // Get time stamp since last time this code was run.
 		Event event;
