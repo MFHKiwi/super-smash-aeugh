@@ -18,39 +18,54 @@
 
 using namespace sf;
 using namespace std;
-const string version = "Beta v1.0.2";
+const string version = "Beta v1.0.3";
 
 int main(int argc, char* argv[]) {
-	float speed = 3.8f / 33333.3333333f;
+	float speed = 0.000114f;
+	bool showFps = false;
 	if (argc > 1) { // Run if command line argument given.
-		string arg = argv[1];
-		if ((arg == "-e") || (arg == "--easy")) speed = 2.2f / 33333.3333333f; // Activate easy mode if easy flag is given.
-		else;
-		if ((arg == "-h") || (arg == "--help")) {
-			cout << "\nSuper Smash ÆÜGH Help\n" << version << "\n\n-h, --help: print this help message\n-e, --easy: make enemy move slower\n";
-			return 0;
+		for (int i = 1; i <= argc - 1; i++) {
+			string arg = argv[i];
+			if ((arg == "-e") || (arg == "--easy")) speed = 0.000066f; // Activate easy mode if easy flag is given.
+			else if ((arg == "-h") || (arg == "--help")) {
+				cout << "\nSuper Smash ÆÜGH Help\n" << version << "\n\n-h, --help: print this help message\n-e, --easy: make enemy move slower\n-f, --fps: display framerate counter\n";
+				return 0;
+			}
+			else if ((arg == "-f") || (arg == "--fps")) showFps = true;
 		}
 	}
 	Clock gameClock;
+	Clock secondCounter;
 	Font silkscreen;
 	silkscreen.loadFromMemory(silkscreen_ttf, silkscreen_ttf_len);
 	CustomText scoreText(silkscreen_ttf, silkscreen_ttf_len, 35, Text::Regular, Color::Black, "");
 	CustomText versionText(silkscreen_ttf, silkscreen_ttf_len, 35, Text::Regular, Color::Black, version);
+	CustomText fpsText(silkscreen_ttf, silkscreen_ttf_len, 35, Text::Regular, Color::Black, "");
 	CustomWindow window(1024, 768, "Super Smash AEUGH", icon_png, icon_png_len);
 	versionText.text.setPosition(window.window.getSize().x - versionText.text.getGlobalBounds().width - 10.f, 0.f);
+	fpsText.text.setPosition(0.f, 30.f);
 	window.window.setVerticalSyncEnabled(true);
 	CustomSprite pufferfish(pufferfish_png, pufferfish_png_len, 0.4f, 0.4f, 0.f, 30.f, 30.f);
-	CustomSprite carrot(carrot_png, carrot_png_len, 0.3f, 0.3f, 45.f, randomV2f(window));
+	CustomSprite carrot(carrot_png, carrot_png_len, 0.3f, 0.3f, 45.f, 0.f, 0.f);
 	CustomSound death(death_wav, death_wav_len);
 	CustomSound eat(eat_wav, eat_wav_len);
+	CustomSprite enemy(enemy_png, enemy_png_len, 0.7f, 0.7f, 0.f, window.window.getSize().x, window.window.getSize().y);
 	int score = 0;
+	int fps = 0;
 	bool paused = false;
 	do {
 		carrot.teleport(randomV2f(window, carrot));
 	} while (carrot.touches(pufferfish));
-	CustomSprite enemy(enemy_png, enemy_png_len, 0.7f, 0.7f, 0.f, window.window.getSize().x, window.window.getSize().y);
 	while (window.window.isOpen()) {
 		Time elapsedSinceLastTick = gameClock.restart(); // Get time stamp since last time this code was run.
+		if (showFps == true) {
+			fps++;
+			if (secondCounter.getElapsedTime().asMicroseconds() >= 1000000) {
+				secondCounter.restart();
+				fpsText.text.setString("FPS: " + to_string(fps));
+				fps = 0;
+			}
+		}
 		Event event;
 		while (window.window.pollEvent(event)) { // Detect window close.
                         if (event.type == Event::Closed) window.window.close();
@@ -101,6 +116,7 @@ int main(int argc, char* argv[]) {
                 }
 		window.window.draw(scoreText.text);
 		window.window.draw(versionText.text);
+		window.window.draw(fpsText.text);
 		window.window.display();
                 while (paused == true && window.window.isOpen()) {
                         while (window.window.pollEvent(event)) { // Detect window close.
