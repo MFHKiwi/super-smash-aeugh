@@ -8,6 +8,7 @@ A simple game made in SFML and C++ that features an arrow key-controlled pufferf
 ### Command line arguments:
 * `-h` or `--help` to display help screen
 * `-e` or `--easy` to activate easy mode
+* `-f` or `--fps` to activate FPS display
 
 ### Build dependencies:
 * SFML 2.5.1 (this is the one on my system; you can probably get away with an older one)
